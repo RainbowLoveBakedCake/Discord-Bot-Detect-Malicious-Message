@@ -35,5 +35,19 @@ async def on_member_join(member):
         f'Hi {member.name}, welcome to my discord server!'
     )
 
+@client.event
+async def on_message(message):
+    # Get username of the message sender
+    username = str(message.author).split('#')[0]
+    # Get the message content
+    user_message = str(message.content)
+    # Get the discord text channel where the messeges sent
+    channel = str(message.channel.name)
+    print(f'{username}: {user_message} ({channel})')
+
+    # To make the bot don't read message from it's own
+    if message.author == client.user:
+        return
+
 client = CustomClient()
 client.run(TOKEN)
