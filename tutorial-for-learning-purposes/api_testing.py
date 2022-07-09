@@ -19,7 +19,10 @@ def api_scanurl(message):
 
     malicious_score = (decodedResponse["data"]["attributes"]["last_analysis_stats"]["malicious"])
     return malicious_score
+
     # if malicious_score > 0 :
     #     print(malicious_score, 'Malicious URL')
     # else:
     #     print('URL Safe')
+
+print(api_scanurl("https://google.com"))
