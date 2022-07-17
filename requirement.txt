@@ -1,2 +1,11 @@
-discord.py
+discord
 dotenv
+re
+joblib
+numpy
+sklearn
+pandas
+response
+requests
+json
+base64
