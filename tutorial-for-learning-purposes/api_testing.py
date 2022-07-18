@@ -25,4 +25,4 @@ def api_scanurl(message):
     # else:
     #     print('URL Safe')
 
-print(api_scanurl("https://google.com"))
+print(api_scanurl("https://discord-login.ru/"))

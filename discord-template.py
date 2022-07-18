@@ -1,6 +1,7 @@
 #tutorial 1 : https://realpython.com/how-to-make-a-discord-bot-python/
 #tutorial 2 : https://www.youtube.com/watch?v=fU-kWx-OYvE
 
+from turtle import delay
 from urllib import response
 import discord
 import re
@@ -13,12 +14,8 @@ from api_called import API
 
 #parsing message
 def parsing_message(message):
-    #urls = ''
-    #for line in message:
     urls = re.findall('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', message)
     print(urls)
-    #new_url = ''
-    #new_url += urls    
     return urls
 
 #connect to machine learning
@@ -26,6 +23,7 @@ def machine_learning_function(parsed_message):
     ml_parsed_message = parsed_message
     print(ml_parsed_message)
     labelEncoder = LabelEncoder()
+    
     # reshape data string to float something
     ml_parsed_message = labelEncoder.fit_transform(ml_parsed_message)
     ml_parsed_message = np.reshape(ml_parsed_message, (1, -1))
@@ -35,11 +33,9 @@ def machine_learning_function(parsed_message):
  
     # Use the loaded model to make predictions
     prediction = ml_model.predict(ml_parsed_message)
-    #print(prediction)
+
     result = prediction[0]
-    print(prediction)
-    print(result)
-    return prediction
+    return result
 
 #connect to api virus total
 def api_vt_function(parsed_message):
@@ -70,19 +66,27 @@ async def on_message(message):
     #if people send a new message 
     #while True:
         #await client.send_message()
-    await message.channel.send('checking ...')
+    #await message.channel.send('checking ...')
 
     #parsing 
     parsed_message = parsing_message(user_message)
-    #print(parsed_message)
+    
     url_detect_beginning = machine_learning_function(parsed_message)
     new_parsed_message = ' '.join(map(str, parsed_message))
-    #print(new_parsed_message)
+   
     if url_detect_beginning == 1:
-         #checking again with virus total
-        #url_detect_final = api_vt_function(new_parsed_message)
-        #if url_detect_final > 0:
+        #checking again with virus total
+        url_detect_final = api_vt_function(new_parsed_message)
+        if url_detect_final + url_detect_beginning > 1:
+            print("user_message: ",user_message)
+            print("type of user_message:", type(user_message))
+            print("url detect beginning:",url_detect_beginning)
+            print("type of user_detect_beginning:", type(url_detect_beginning))
+            print("url detect final:",url_detect_final)
+            print("type of url_detect_final:", type(url_detect_final))
             #delete message
-        await message.delete()
+            await message.delete()
+            await message.channel.send("Message has been deleted due to trying sending malicious message")
+            
 
 client.run(TOKEN)
