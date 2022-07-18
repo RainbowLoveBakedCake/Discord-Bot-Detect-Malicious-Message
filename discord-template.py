@@ -66,7 +66,7 @@ async def on_message(message):
     #if people send a new message 
     #while True:
         #await client.send_message()
-    await message.channel.send('checking ...')
+    #await message.channel.send('checking ...')
 
     #parsing 
     parsed_message = parsing_message(user_message)
@@ -77,7 +77,7 @@ async def on_message(message):
     if url_detect_beginning == 1:
         #checking again with virus total
         url_detect_final = api_vt_function(new_parsed_message)
-        if url_detect_final > 0:
+        if url_detect_final + url_detect_beginning > 1:
             print("user_message: ",user_message)
             print("type of user_message:", type(user_message))
             print("url detect beginning:",url_detect_beginning)
