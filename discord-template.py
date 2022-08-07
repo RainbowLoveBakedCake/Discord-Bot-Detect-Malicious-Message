@@ -1,11 +1,8 @@
 #tutorial 1 : https://realpython.com/how-to-make-a-discord-bot-python/
 #tutorial 2 : https://www.youtube.com/watch?v=fU-kWx-OYvE
 
-from turtle import delay
-from urllib import response
 import discord
 import re
-from joblib import Parallel, delayed
 import joblib
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
@@ -29,7 +26,9 @@ def machine_learning_function(parsed_message):
     ml_parsed_message = np.reshape(ml_parsed_message, (1, -1))
     
     # Load the model from the file
+    # if using linux just uncomment line 31
     ml_model = joblib.load('machine_learning\ml_model.pkl')
+    # ml_model = joblib.load('machine_learning/ml_model.pkl')
  
     # Use the loaded model to make predictions
     prediction = ml_model.predict(ml_parsed_message)
@@ -78,12 +77,12 @@ async def on_message(message):
         #checking again with virus total
         url_detect_final = api_vt_function(new_parsed_message)
         if url_detect_final + url_detect_beginning > 1:
-            print("user_message: ",user_message)
-            print("type of user_message:", type(user_message))
-            print("url detect beginning:",url_detect_beginning)
-            print("type of user_detect_beginning:", type(url_detect_beginning))
-            print("url detect final:",url_detect_final)
-            print("type of url_detect_final:", type(url_detect_final))
+            #print("user_message: ",user_message)
+            #print("type of user_message:", type(user_message))
+            #print("url detect beginning:",url_detect_beginning)
+            #print("type of user_detect_beginning:", type(url_detect_beginning))
+            #print("url detect final:",url_detect_final)
+            #print("type of url_detect_final:", type(url_detect_final))
             #delete message
             await message.delete()
             await message.channel.send("Message has been deleted due to trying sending malicious message")
