@@ -3,11 +3,18 @@
 
 import discord
 import re
+from urllib.parse import urlparse
 import joblib
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
 from api_called import API
 
+#taking domain-only from url
+def find_domain(url):
+    domain = urlparse(url).netloc
+    if domain.startswith('www.'):
+        domain = re.sub(r'www.','',domain)
+    return domain
 
 #parsing message
 def parsing_message(message):
@@ -18,7 +25,7 @@ def parsing_message(message):
 #connect to machine learning
 def machine_learning_function(parsed_message):
     ml_parsed_message = parsed_message
-    print(ml_parsed_message)
+    print("ml_parsed_message: ", ml_parsed_message)
     labelEncoder = LabelEncoder()
     
     # reshape data string to float something
@@ -67,25 +74,33 @@ async def on_message(message):
         #await client.send_message()
     #await message.channel.send('checking ...')
 
-    #parsing 
+    #parsing message -> array
     parsed_message = parsing_message(user_message)
-    
+    print("parsed_message: ", parsed_message)
+
     url_detect_beginning = machine_learning_function(parsed_message)
+    
+    
     new_parsed_message = ' '.join(map(str, parsed_message))
+    print("new_parsed_message: ", new_parsed_message)
    
     if url_detect_beginning == 1:
         #checking again with virus total
         url_detect_final = api_vt_function(new_parsed_message)
+        print("new_parsed_message: ", new_parsed_message)
         if url_detect_final + url_detect_beginning > 1:
+            
+            ##uncomment for debugging this bot
             #print("user_message: ",user_message)
             #print("type of user_message:", type(user_message))
             #print("url detect beginning:",url_detect_beginning)
             #print("type of user_detect_beginning:", type(url_detect_beginning))
             #print("url detect final:",url_detect_final)
             #print("type of url_detect_final:", type(url_detect_final))
+            
             #delete message
             await message.delete()
-            await message.channel.send("Message has been deleted due to trying sending malicious message")
+            await message.channel.send("Message from "+ str(message.author) +" has been deleted due to trying sending malicious messages")
             
 
 client.run(TOKEN)
