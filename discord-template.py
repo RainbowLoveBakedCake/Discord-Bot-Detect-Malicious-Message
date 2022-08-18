@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 import numpy as np
 from api_called import API
 
-#taking domain-only from url
+#taking domain-only from
 def find_domain(url):
     domain = urlparse(url).netloc
     if domain.startswith('www.'):
@@ -19,13 +19,27 @@ def find_domain(url):
 #parsing message
 def parsing_message(message):
     urls = re.findall('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', message)
-    print(urls)
+    
+    #uncomment below for debugging purposes only
+    #print(urls)
+    
     return urls
 
 #connect to machine learning
 def machine_learning_function(parsed_message):
     ml_parsed_message = parsed_message
-    print("ml_parsed_message: ", ml_parsed_message)
+    
+    #uncomment below for debugging purposes only
+    #print("ml_parsed_message: ", ml_parsed_message)
+    
+    #for taking domain-only to be checked by machine learning
+    machinelearning_domain_only = ' '.join(map(str, ml_parsed_message))
+    ml_final_predict = find_domain(machinelearning_domain_only)
+    ml_final_predict = [ml_final_predict]
+    
+    #uncomment below for debugging purposes only
+    #print("ml_final_predict : ", ml_final_predict)
+    
     labelEncoder = LabelEncoder()
     
     # reshape data string to float something
@@ -33,7 +47,7 @@ def machine_learning_function(parsed_message):
     ml_parsed_message = np.reshape(ml_parsed_message, (1, -1))
     
     # Load the model from the file
-    # if using linux just uncomment line 38
+    # if using linux just uncomment line 31
     ml_model = joblib.load('machine_learning\ml_model.pkl')
     # ml_model = joblib.load('machine_learning/ml_model.pkl')
  
@@ -69,28 +83,33 @@ async def on_message(message):
     if message.author == client.user:
         return
     
-    #if people send a new message 
+    #if people send a new message -> just to make sure bot running in discord
     #while True:
         #await client.send_message()
     #await message.channel.send('checking ...')
 
-    #parsing message -> array
+    #parsing message -> array and detect with machine learning
     parsed_message = parsing_message(user_message)
-    print("parsed_message: ", parsed_message)
-
     url_detect_beginning = machine_learning_function(parsed_message)
     
     
+    #uncomment below for debugging purposes only
+    #print("parsed_message: ", parsed_message)
+
+    #because api just accept string 
     new_parsed_message = ' '.join(map(str, parsed_message))
-    print("new_parsed_message: ", new_parsed_message)
+    
+    #uncomment below for debugging purposes only
+    #print("new_parsed_message: ", new_parsed_message)
    
+   #if machine learning detect this malicious
     if url_detect_beginning == 1:
         #checking again with virus total
         url_detect_final = api_vt_function(new_parsed_message)
         print("new_parsed_message: ", new_parsed_message)
         if url_detect_final + url_detect_beginning > 1:
             
-            ##uncomment for debugging this bot
+            ##uncomment below for debugging this bot
             #print("user_message: ",user_message)
             #print("type of user_message:", type(user_message))
             #print("url detect beginning:",url_detect_beginning)
@@ -102,5 +121,5 @@ async def on_message(message):
             await message.delete()
             await message.channel.send("Message from "+ str(message.author) +" has been deleted due to trying sending malicious messages")
             
-
+#make sure bot running with token that already generated in discord developer portal
 client.run(TOKEN)
