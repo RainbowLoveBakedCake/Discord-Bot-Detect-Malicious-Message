@@ -1,6 +1,3 @@
-#tutorial 1 : https://realpython.com/how-to-make-a-discord-bot-python/
-#tutorial 2 : https://www.youtube.com/watch?v=fU-kWx-OYvE
-
 import discord
 import re
 from urllib.parse import urlparse
