@@ -9,11 +9,3 @@ def find_domain(url):
     return domain
 
 print(find_domain("https://www.discord-login.ru/discord/"))
-
-
-
-
-
-
-
-
