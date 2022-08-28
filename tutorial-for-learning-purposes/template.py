@@ -5,7 +5,7 @@ import discord
 import random
 
 #token is from Discord Developer Portal > Bot > you will generate token, just copy and put it here
-TOKEN = 'OTg4MDYxNDcxODQ4MTQ0OTI2.Gmk0uu.pYSYTnONNCQFzPxtnSdKV2vWJ_Dp8qlDpylSKI'
+TOKEN = 'DISCORD-API-KEY'
 client = discord.Client()
 
 #turn on your discord bot
