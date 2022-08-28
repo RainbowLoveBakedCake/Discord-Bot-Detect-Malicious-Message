@@ -16,10 +16,10 @@ def api_scanurl(message):
     url_id = base64.urlsafe_b64encode(target_url.encode()).decode().strip("=")
     url = "https://www.virustotal.com/api/v3/urls/" + url_id
 
-    # Api Key from your api virustotal account
+    # Api Key from your api virustotal account, if you don't have this just access "https://developers.virustotal.com/"
     headers = {
         "Accept" : "application/json",
-        "x-apikey" : "f873095544f7cb5a7be799220cb17e21b332f21578eed4d23d952a45e196074f"
+        "x-apikey" : "API-KEY-VIRUSTOTAL"
     }
 
     response = requests.request("GET", url, headers=headers)
