@@ -11,6 +11,20 @@ Discord Bot Project for detect malicious message in server. This is our final ye
 - [Angelica Christabelle Rama Triana](https://github.com/angelicacrt)
 
 
+## Requirement
+
+- Discord API Token : From [Discord Developer Portal](https://discord.com/developers/applications)
+- Virustotal API Token : From [Developer Virustotal](https://developers.virustotal.com/)
+- Python 3.10+
+
+
+## How to Use
+
+-  Add Discord API Token to discord-template.python
+-  Add Virustotal API to API.py in api_called directory
+-  Change directory of Machine Learning Directory in discord-template.py (If using Linux OS)
+-  Run with Python or Code Editor or Docker (If using Dockefile)
+
 
 ## Features
 
