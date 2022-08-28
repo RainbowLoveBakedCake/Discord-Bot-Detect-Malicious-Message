@@ -34,7 +34,7 @@ def machine_learning_function(parsed_message):
     ml_parsed_message = np.reshape(ml_parsed_message, (1, -1))
     
     # Load the model from the file
-    # if using linux just uncomment line 49 and comment line 48
+    # if using linux just uncomment line 39 and comment line 38
     ml_model = joblib.load('machine_learning\ml_model.pkl')
     # ml_model = joblib.load('machine_learning/ml_model.pkl')
  
